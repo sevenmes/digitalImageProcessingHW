@@ -37,7 +37,7 @@ int main()
 
     int totalNum = 100;
     
-    for(int i = 1; i < totalNum; i++){
+    for(int i = 2; i < totalNum; i++){
         
         //判断数字
         int res = checkPrimeNumber(i);
