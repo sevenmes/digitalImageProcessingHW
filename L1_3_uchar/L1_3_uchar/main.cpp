@@ -12,7 +12,7 @@ using namespace cv;
 using std::string;
 
 
-int main(int argc, const char * argv[]) {
+int main() {
     
     uchar threshold=100;
     
