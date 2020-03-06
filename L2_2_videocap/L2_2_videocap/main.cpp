@@ -16,7 +16,7 @@ int main()
 {
     VideoCapture cap;
     
-    cap.open(0);
+    cap.open("/Users/shuziqi/Desktop/第二周身体素质课.mp4");
     
     if(!cap.isOpened())
     {
