@@ -19,11 +19,7 @@ int main()
     pt.x = 10;
     pt.y = 10;
     circle(dispMat,pt,5,CV_RGB(255,0,0),1,8,0);
-    
-    
-    line(dispMat,pt,pt,CV_RGB(255,0,0),1,8,0);
-
-    
+    line(dispMat,pt1,pt2,CV_RGB(255,0,0),1,8,0);
     cv::Rect rect;
     rect.x = 10;
     rect.y = 10;
