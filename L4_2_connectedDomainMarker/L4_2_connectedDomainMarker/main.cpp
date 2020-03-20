@@ -8,6 +8,8 @@
 
 #include <iostream>
 #include <opencv2/opencv.hpp>
+#include <math.h>
+#include <stdlib.h>
 using namespace cv;
 using std::string;
 
@@ -39,6 +41,7 @@ int main() {
         rectangle(binaryMat, bndbox, CV_RGB(255,255,255),1,8,0);
     }
 
+    std::cout << "the total of connected Components = " << nComps - 1 << std::endl;
     imshow("结果图", binaryMat);
     waitKey(0);
 }
