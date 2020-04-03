@@ -15,14 +15,19 @@ using std::string;
 int main()
 {
     cv::Mat dstMat;
-    cv::Mat result1, result2;
+    cv::Mat x, y, result1, result2;
     cv::Mat srcMat = cv::imread("/Users/shuziqi/Desktop/lena.jpg");
     if(srcMat.empty()) return -1;
+    cvtColor(srcMat, result1, CV_BGR2GRAY);
+    GaussianBlur(result1, result1, Size(7, 7), 1.5, 1.5);
+    Canny(result1, result1, 0, 30, 3);
+    
     cvtColor(srcMat, dstMat, CV_BGR2GRAY);
-    GaussianBlur(dstMat, dstMat, Size(7, 7), 1.5, 1.5);
+    Sobel(dstMat, x, CV_16SC1, 1, 0);
+    Sobel(dstMat, y, CV_16SC1, 0, 1);
+    Canny(x, y, result2, 0, 30);
     
-    Canny(dstMat, dstMat, 0, 30, 3);
-    
-    imshow("1", dstMat);
+    imshow("result1", result1);
+    imshow("result2", result2);
     waitKey(0);
 }
