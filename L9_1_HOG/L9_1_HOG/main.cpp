@@ -39,9 +39,9 @@ float *hog(Mat srcMat)
             
             cartToPolar(gx, gy, mag, angle, true);
             
-            for (int a = j * cellSize; a < (j + 1)*cellSize; a++)
+            for (int a = i * cellSize; a < (i + 1)*cellSize; a++)
             {
-                for (int b = i * cellSize; b < (i + 1)*cellSize; b++)
+                for (int b = j * cellSize; b < (j + 1)*cellSize; b++)
                 {
                     int n = angle.at<float>(a, b) / 45;
                     float m = mag.at<float>(a, b);
@@ -51,6 +51,7 @@ float *hog(Mat srcMat)
             binnumber++;
         }
     }
+    delete[] ref_hist;
     return ref_hist;
 }
 
