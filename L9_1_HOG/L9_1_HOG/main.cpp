@@ -48,7 +48,6 @@ float *hog(Mat srcMat) {
             
             }
         }
-    delete[] ref_hist;
     return ref_hist;
 }
 
