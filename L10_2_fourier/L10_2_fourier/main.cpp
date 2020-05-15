@@ -15,7 +15,7 @@ using std::string;
 
 int main() {
 
-    cv::Mat srcMat = imread("/Users/shuziqi/Desktop/test.jpg", 0);
+    cv::Mat srcMat = imread("/Users/shuziqi/Desktop/test.png", 0);
 
     if (srcMat.empty() ) {
         std::cout << "failed to read image!:" << std::endl;
