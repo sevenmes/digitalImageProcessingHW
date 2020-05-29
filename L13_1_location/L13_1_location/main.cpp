@@ -51,58 +51,78 @@ float *hog(Mat srcMat) {
     return ref_hist;
 }
 
-float distance(Mat& srcMat, Mat& img)
+
+int main()
 {
-    int cellSize = 16;
-    int nX = srcMat.cols / cellSize;
-    int nY = srcMat.rows / cellSize;
-    int cellnum = nX * nY;
-    int bins = cellnum * 8;
-
-    float a;
-    float d1 = 0;
-    float dis;
-    
-    for (int i = 0; i < bins; i++)
-    {
-        a = hog(srcMat)[i] - hog(img)[i];
-        d1 += a * a;
-    }
-    dis = sqrt(d1);
-
-    return dis;
-}
-
-int main() {
     Mat srcMat = imread("/Users/shuziqi/Desktop/template.png");
     Mat img = imread("/Users/shuziqi/Desktop/img.png");
 
-    float dis1, dis2;
-    int a, b;
-    //利用窗口对图像进行遍历
-    for (int i = 0; i < img.rows - srcMat.rows; i++)
+    float dis1 = 0;
+    float dis = 0;
+    float *hist;
+    float *hist1;
+
+    Rect rect;
+    hist = hog(srcMat);
+    
+    int row = srcMat.rows;
+    int col = srcMat.cols;
+    int row1 = img.rows;
+    int col1 = img.cols;
+
+    for(int i=0; i<col1-col; i++)
     {
-        for (int j = 0; j < img.cols - srcMat.cols; j++)
+        for(int j=0; j < row1 - row; j++)
         {
-            Rect rect1(j, i, srcMat.cols, srcMat.rows);
-            Mat ROI = img(rect1);
-            dis2 = distance(srcMat, ROI);
-            if(i==0 & j==0)
+            Mat ROI = img(Rect(i, j, col, row));
+            hist1 = hog(ROI);
+            
+            //float distance(Mat& srcMat, Mat& img)
+            //{
+            //    int cellSize = 16;
+            //    int nX = srcMat.cols / cellSize;
+            //    int nY = srcMat.rows / cellSize;
+            //    int cellnum = nX * nY;
+            //    int bins = cellnum * 8;
+            //
+            //    float a;
+            //    float d1 = 0;
+            //    float dis;
+            //
+            //    for (int i = 0; i < bins; i++)
+            //    {
+            //        a = hog(srcMat)[i] - hog(img)[i];
+            //        d1 += a * a;
+            //    }
+            //    dis = sqrt(d1);
+            //
+            //    return dis;
+            //}
+
+            for(int n = 0; n < 16; n++)
             {
-                dis1 = dis2;
+                dis1 += (hist[n] - hist1[n]) * (hist[n] - hist1[n]);
             }
-            if (dis2 < dis1)
+            dis1 = sqrt(dis1);
+
+            if(i == 0 & j == 0)
             {
-                dis1 = dis2;
-                a = i;
-                b = j;
+                dis = dis1;
             }
+
+            if(dis1 < dis)
+            {
+                dis = dis1;
+                rect = Rect(i, j, col, row);
+            }
+
         }
     }
-    Rect rect2(b, a, srcMat.cols, srcMat.rows);
-    rectangle(img, rect2, CV_RGB(255, 0, 0), 1, 8, 0);
-    imshow("result",img);
+
+
+    rectangle(img, rect, CV_RGB(255,0,0), 1, 8, 0);
+    imshow("result", img);
     waitKey(0);
+    
     return 0;
 }
-
